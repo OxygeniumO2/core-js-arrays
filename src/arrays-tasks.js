@@ -456,8 +456,26 @@ function getFalsyValuesCount(arr) {
  *                              [0,0,0,1,0],
  *                              [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const arr = new Array(n).fill(0);
+  let ind = 0;
+  const res = arr
+    .reduce((acc) => {
+      acc.push(arr);
+      return acc;
+    }, [])
+    .map((item) => {
+      return item.map((_, index) => {
+        if (index === ind) {
+          return 1;
+        }
+        if (index === item.length - 1) {
+          ind += 1;
+        }
+        return 0;
+      });
+    });
+  return res;
 }
 
 /**
@@ -471,8 +489,11 @@ function getIdentityMatrix(/* n */) {
  *    getIndicesOfOddNumbers([2, 4, 6, 8, 10]) => []
  *    getIndicesOfOddNumbers([11, 22, 33, 44, 55]) => [0, 2, 4]
  */
-function getIndicesOfOddNumbers(/* numbers */) {
-  throw new Error('Not implemented');
+function getIndicesOfOddNumbers(numbers) {
+  return numbers.reduce((acc, item, index) => {
+    if (item % 2 !== 0) acc.push(index);
+    return acc;
+  }, []);
 }
 
 /**
@@ -485,8 +506,21 @@ function getIndicesOfOddNumbers(/* numbers */) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.reduce((acc, item) => {
+    let rgb;
+    const zero = '0';
+    if (item >= 16777215) {
+      rgb = '#FFFFFF';
+      acc.push(rgb);
+      return acc;
+    }
+    rgb = `${item.toString(16).toUpperCase()}`;
+    const zerosCount = 6 - rgb.length;
+    const rgbRes = `#${zero.repeat(zerosCount)}${rgb}`;
+    acc.push(rgbRes);
+    return acc;
+  }, []);
 }
 
 /**
